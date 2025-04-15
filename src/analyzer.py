@@ -1,5 +1,3 @@
-# BASIC THE BRAIN OF THE PROGRAM
-
 from src.login import *
 from src.consults import *
 from src.utils import *
@@ -15,7 +13,7 @@ def analyzer(driver, file_entry):
         try:
             df_principal = pd.read_excel(file_entry)
         except Exception as e:
-            logger.error(f"ERRO: Não foi possível ler o arquivo excel. Verifique se o nome da folha foi escrito corretamente. Se a sua estrutura está correta. Consulte o Guia para mais informações.\n{e}")
+            logger.error(f"ERRO: It could not read the xlsx file. Check if the structure are corret, see in readme.md.\n{e}")
             return
 
         columns_to_convert = ['Obs', 'C. Previa', 'Ficheiro S', 'Com. N. Fat.']
@@ -34,7 +32,7 @@ def analyzer(driver, file_entry):
                     counter += 1
                     df_principal.at[index, 'Obs'] = "Senha Incorreta"
                     save_to_excel(df_principal, counter, row['Mes'], row['Ano'])
-                    logger.info(f"Senha Errada: {row['Login']}")
+                    logger.info(f"Wrong password: {row['Login']}")
                     disconnect(driver)
                     logger.info(counter)
                     continue
@@ -42,7 +40,7 @@ def analyzer(driver, file_entry):
                     counter += 1
                     df_principal.at[index, 'Obs'] = "Senha Expirada"
                     save_to_excel(df_principal, counter, row['Mes'], row['Ano'])
-                    logger.info(f"Senha Expirada: {row['Login']}")
+                    logger.info(f"Expired password: {row['Login']}")
                     disconnect(driver)
                     logger.info(counter)
                     continue
@@ -52,7 +50,7 @@ def analyzer(driver, file_entry):
                     counter += 1
                     df_principal.at[index, 'C. Previa'] = "SIM"
                     save_to_excel(df_principal, counter, row['Mes'], row['Ano'])
-                    logger.info(f"Comunicação Prévia: {row['Login']}")
+                    logger.info(f"Have previous comunication: {row['Login']}")
                     disconnect(driver)
                     logger.info(counter)
                     continue
@@ -63,14 +61,14 @@ def analyzer(driver, file_entry):
                     counter += 1
                     df_principal.at[index, 'Ficheiro S'] = "SIM"
                     save_to_excel(df_principal, counter, row['Mes'], row['Ano'])
-                    logger.info(f"Possui ficheiro S.: {row['Login']}")
+                    logger.info(f"Have saft file: {row['Login']}")
                     disconnect(driver)
                     logger.info(counter)
                     continue
                 driver.back()
 
                 loop_function(lambda: billing_abscence(driver, row['Ano'], row['Mes']))
-                logger.info(f"Saft n. faturacao comunicado {row['Login']}")
+                logger.info(f"Saft n. billing comunicated {row['Login']}")
                 df_principal.at[index, 'Com. N. Fat.'] = "SIM"
                 counter += 1
                 save_to_excel(df_principal, counter, row['Mes'], row['Ano'])
@@ -78,12 +76,12 @@ def analyzer(driver, file_entry):
                 disconnect(driver)
             
         except Exception as e:
-            logger.error(f"Erro inesperado durante a execução: {e}")
+            logger.error(f"Unexpected error during execution: {e}")
             df_principal.to_excel(f"backup_error_{datetime.now().strftime('%Y%m%d_%H%M%S')}.xlsx", index=False)
-            logger.info("Backup automático salvo após erro.")
+            logger.info("Backup automatic was save after the error.")
         finally:
             month = year = "final"
             if(driver):
                 driver_quit(driver)
                 save_to_excel(df_principal, counter, month, year)
-        logger.info("Sucesso\nProcesso de submissão de SAFTs de não faturação concluído!")
+        logger.info("Success\nSAFT non-billing submission process has finished.")

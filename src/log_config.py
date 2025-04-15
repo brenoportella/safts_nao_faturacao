@@ -6,5 +6,4 @@ logging.basicConfig(
     handlers=[logging.FileHandler('safts.log'), logging.StreamHandler()],
 )
 
-# Define um logger que pode ser importado
 logger = logging.getLogger(__name__)

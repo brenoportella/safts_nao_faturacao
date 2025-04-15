@@ -1,5 +1,6 @@
 from src.defines import *
 from selenium.common.exceptions import WebDriverException
+from src.log_config import logger
 
 def convert_month(month):
      months = {
@@ -24,6 +25,6 @@ def loop_function(function):
             function()
             break
         except WebDriverException as e:
-            print(f"Erro na tentativa {attempt + 1}: {str(e)}")
+            logger.error(f"Error on {attempt + 1} try: {str(e)}")
     else:
-        print(f"Todas as tentativas falharam. Verifique o erro e tente novamente mais tarde.")
+        logger.info(f"All the tries failled. Check the error and try again.")
