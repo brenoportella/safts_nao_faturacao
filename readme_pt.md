@@ -1,6 +1,6 @@
 # SUBMISSÕES DE SAFTS SEM FATURAÇÃO
 
-🇬🇧 [Versão em Inglês](https://github.com/brenoportella/safts_nao_faturacao/blob/main/readme.md)
+🇬🇧 [Versão em Inglês](github.com/brenoportella/safts_nao_faturacao/blob/master/README.md)
 
 ### Requisitos
 

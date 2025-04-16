@@ -1,6 +1,6 @@
 # NON-BILLING SAFTS' SUBIMISSIONS
 
- 🇵🇹 [Portuguese version](https://github.com/brenoportella/safts_nao_faturacao/blob/main/readme_pt.md)
+ 🇵🇹 [Portuguese version](https://github.com/brenoportella/safts_nao_faturacao/blob/master/readme_pt.md)
 
 ### Requirements
 Before starting, make sure you have Python and pip installed on your system.
