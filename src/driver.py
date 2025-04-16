@@ -18,7 +18,7 @@ def setup_driver():
 
     options = webdriver.EdgeOptions()
     options.add_argument('--safebrowsing-disable-download-protection')
-    # options.add_argument('--headless')
+    options.add_argument('--headless')
     options.add_argument('--disable-cache')
     options.add_argument('--disable-application-cache')
     options.add_argument('--disable-offline-load-stale-cache')
