@@ -2,6 +2,8 @@
 
  🇵🇹 [Portuguese version](https://github.com/brenoportella/safts_nao_faturacao/blob/master/readme_pt.md)
 
+A script to submit non-billing SAFTs and check the submitted billing SAFTs. 
+
 ### Requirements
 Before starting, make sure you have Python and pip installed on your system.
 - You can check by running:
