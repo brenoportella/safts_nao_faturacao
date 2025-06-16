@@ -5,13 +5,15 @@ from src.driver import driver_quit
 from src.save_excel import save_to_excel
 from src.log_config import logger
 
-import datetime
+from datetime import datetime
 
 import pandas as pd
+import traceback
 
 def analyzer(driver, file_entry):
         try:
             df_principal = pd.read_excel(file_entry)
+            df_principal.columns = df_principal.columns.str.strip()
         except Exception as e:
             logger.error(f"ERRO: It could not read the xlsx file. Check if the structure are corret, see in readme.md.\n{e}")
             return
@@ -76,12 +78,12 @@ def analyzer(driver, file_entry):
                 disconnect(driver)
             
         except Exception as e:
-            logger.error(f"Unexpected error during execution: {e}")
+            logger.error(f"Unexpected error during execution: {traceback.format_exc()}")
             df_principal.to_excel(f"backup_error_{datetime.now().strftime('%Y%m%d_%H%M%S')}.xlsx", index=False)
             logger.info("Backup automatic was save after the error.")
         finally:
             month = year = "final"
             if(driver):
                 driver_quit(driver)
-                save_to_excel(df_principal, counter, month, year)
+                df_principal.to_excel(f"output_{month}_{year}.xlsx", index=False)
         logger.info("Success\nSAFT non-billing submission process has finished.")
