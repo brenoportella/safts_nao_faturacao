@@ -3,26 +3,30 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 import time
-
+from src.log_config import logger
 from src.defines import *
 
 def consult_comunication(driver, year, month):
-    bt_consult = WebDriverWait(driver, WAIT_TIME).until(
-                      EC.presence_of_element_located((By.XPATH,"/html/body/div/div[4]/div[3]/div/fieldset/div/div/p[2]/a[2]")))
-    bt_consult.click()
+    try:
+      bt_consult = WebDriverWait(driver, WAIT_TIME).until(
+                        EC.presence_of_element_located((By.XPATH,"/html/body/div/div[4]/div[3]/div/fieldset/div/div/p[2]/a[2]")))
+      bt_consult.click()
 
-    ft_year = WebDriverWait(driver, WAIT_TIME).until(EC.presence_of_element_located((By.ID,"anoFilter")))
-    ft_select_year = ft_year.find_element(By.CSS_SELECTOR, f"option[value='{year}']")
-    ft_select_year.click()
+      ft_year = WebDriverWait(driver, WAIT_TIME).until(EC.presence_of_element_located((By.ID,"anoFilter")))
+      ft_select_year = ft_year.find_element(By.CSS_SELECTOR, f"option[value='{year}']")
+      ft_select_year.click()
 
-    ft_month = WebDriverWait(driver, WAIT_TIME).until(EC.presence_of_element_located((By.ID,"mesFilter")))
-    ft_select_month = ft_month.find_element(By.CSS_SELECTOR, f"option[value='{month}']")
-    ft_select_month.click()
+      ft_month = WebDriverWait(driver, WAIT_TIME).until(EC.presence_of_element_located((By.ID,"mesFilter")))
+      ft_select_month = ft_month.find_element(By.CSS_SELECTOR, f"option[value='{month}']")
+      ft_select_month.click()
 
-    bt_search = WebDriverWait(driver, WAIT_TIME).until(
-                      EC.presence_of_element_located((By.ID,"pesquisar")))
-    bt_search.click()
-    time.sleep(TIME_SLEEP)
+      bt_search = WebDriverWait(driver, WAIT_TIME).until(
+                        EC.presence_of_element_located((By.ID,"pesquisar")))
+      bt_search.click()
+      time.sleep(TIME_SLEEP)
+      return True
+    except TimeoutException:
+       return False
 
 def no_results_consult(driver):
     try:

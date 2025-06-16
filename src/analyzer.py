@@ -29,7 +29,14 @@ def analyzer(driver, file_entry):
             for index, row in df_principal.iterrows():
                 
                 login(driver, row['Login'], row['Senha'])
-
+                if len(row['Senha']) < 8:
+                    counter += 1
+                    df_principal.at[index, 'Obs'] = "Senha pequena invalida"
+                    save_to_excel(df_principal, counter, row['Mes'], row['Ano'])
+                    logger.info(f"Wrong password, too small: {row['Login']}")
+                    disconnect(driver)
+                    logger.info(counter)
+                    continue
                 if wrong_password(driver):
                     counter += 1
                     df_principal.at[index, 'Obs'] = "Senha Incorreta"
@@ -47,7 +54,10 @@ def analyzer(driver, file_entry):
                     logger.info(counter)
                     continue
                 
-                loop_function(lambda: consult_comunication(driver, row['Ano'], convert_month(row['Mes'])))
+                sucess = loop_function(lambda: consult_comunication(driver, row['Ano'], convert_month(row['Mes'])))
+                if not sucess:
+                    logger.error("Não foi possível consultar a comunicação de faturação. Verifique a senha e o login.")
+                    continue
                 if no_results_consult(driver):
                     counter += 1
                     df_principal.at[index, 'C. Previa'] = "SIM"
@@ -82,8 +92,7 @@ def analyzer(driver, file_entry):
             df_principal.to_excel(f"backup_error_{datetime.now().strftime('%Y%m%d_%H%M%S')}.xlsx", index=False)
             logger.info("Backup automatic was save after the error.")
         finally:
-            month = year = "final"
             if(driver):
                 driver_quit(driver)
-                df_principal.to_excel(f"output_{month}_{year}.xlsx", index=False)
+                df_principal.to_excel(f"output_{row['Mes']}_{row['Ano']}_final.xlsx", index=False)
         logger.info("Success\nSAFT non-billing submission process has finished.")
