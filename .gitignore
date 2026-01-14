@@ -2,3 +2,4 @@ venv/*
 *.xlsx
 __pycache__/
 safts.log
+*.png
