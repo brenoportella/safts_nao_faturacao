@@ -1,8 +1,10 @@
 import os
+
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 
 download_dir = os.path.dirname(os.path.abspath(__file__))
+
 
 def setup_driver():
     """
@@ -20,7 +22,7 @@ def setup_driver():
     }
 
     options = webdriver.ChromeOptions()
-    options.add_argument("--headless=new")   # modo headless moderno
+    options.add_argument("--headless=new")  # modo headless moderno
     options.add_argument("--disable-gpu")
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
@@ -38,6 +40,7 @@ def driver_quit(driver):
     Encerra corretamente a instância do WebDriver.
     """
     driver.quit()
+
 
 # from selenium import webdriver
 
